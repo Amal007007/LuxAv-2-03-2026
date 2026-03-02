@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% extends 'dashboard.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+            <div class="card mb-12">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                      <h5 class="mb-0">Add Categories</h5>
+                    </div>
+                    <div class="card-body">
+                      <form method="post" action="{% url 'save_categories' %}" enctype="multipart/form-data">
+                          {% csrf_token %}
+                        <div class="mb-3">
+                          <label class="form-label" for="category_name">Category Name</label>
+                          <input type="text" name="category_name" class="form-control" id="category_name" placeholder="Speakers">
+                        </div>
+
+                        <div class="mb-3">
+                          <label class="form-label" for="category_description">Description</label>
+                          <textarea id="category_description" name="category_description"  class="form-control" placeholder="Bluetooth speakers"></textarea>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Category Image</label>
+                          <input type="file"  name="category_image" id="category_image" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+                    </div>
+            </div>
+
+</body>
+<!--    Form Validation-->
+     <script>
+        function  form_validation(){
+            let category_name = document.getElementById("category_name").value
+            let category_description = document.getElementById("category_description").value
+            let category_image = document.getElementById("category_image").value
+            if(category_name === ""){
+                alert("Please enter Category Name");
+                return false;
+            }
+              if(category_description === ""){
+                alert("Category Description cannot be null or blank");
+                return false;
+            }
+            else if(category_image === ""){
+                alert("Please Select Category Image");
+                return false;
+            }
+            else{
+                alert("Category added  Successfully...!")
+                return true;
+            }
+        }
+
+    </script>
+</html>
+{% endblock %}

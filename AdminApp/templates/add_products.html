@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% extends 'dashboard.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Add Products</h4>
+<!--                    <p class="card-description"> Basic form elements </p>-->
+                    <form class="forms-sample" method="post" action="{% url 'save_product' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+<!--                      <div class="form-group">-->
+<!--                        <label for="exampleInputName1">Category Name</label>-->
+<!--                        <input type="text" name="category_name" class="form-control" id="exampleInputName1" placeholder="Category Name" required>-->
+<!--                      </div>-->
+                        <div class="form-group">
+                      <label for="product_categories">Select Category</label>
+                      <select id="product_categories" name="p_category_name" class="form-control" style="width:100%">
+                        <option >Select Category </option>
+                          {% for i in categories %}
+                            <option>{{ i.CategoryName }}</option>
+                          {% endfor %}
+
+                      </select>
+                    </div>
+                       <div class="form-group">
+                        <label for="product_name">Product Name</label>
+                        <input type="text" name="product_name" class="form-control" id="product_name" placeholder="Product Name" required>
+                      </div>
+                     <div class="form-group">
+                        <label for="p_price">Price</label>
+                        <input type="number" name="p_price" class="form-control" id="p_price" placeholder="Price" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="p_description">Description</label>
+                        <textarea class="form-control" id="p_description" name="p_description" placeholder="Description" rows="4" required></textarea>
+                      </div>
+                      <div class="form-group mb-3">
+                        <label>Product Image</label>
+                        <input type="file" name="product_image" class="form-control" id="product_image"  required>
+                      </div>
+
+                      <button type="submit" class="btn btn-primary mr-2">Submit</button>
+<!--                      <button class="btn btn-dark">Cancel</button>-->
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+</body>
+    <!--    Form Validation-->
+     <script>
+        function  form_validation(){
+            let product_categories = document.getElementById("product_categories").value
+            let product_name = document.getElementById("product_name").value
+            let p_price = document.getElementById("p_price").value
+            let p_description = document.getElementById("p_description").value
+            let product_image = document.getElementById("product_image").value
+            if(product_categories === ""){
+                alert("Please Select Category Name");
+                return false;
+            }
+              if(product_name === ""){
+                alert("product_name cannot be null or blank");
+                return false;
+            }
+            else if(p_price === ""){
+                alert("Please enter price");
+                return false;
+            }
+            else if(p_description === ""){
+                alert("Please enter price");
+                return false;
+            }
+            else if(product_image === ""){
+                alert("Please enter price");
+                return false;
+            }
+            else{
+                alert("Product added  Successfully...!")
+                return true;
+            }
+        }
+
+    </script>
+</html>
+{% endblock %}
