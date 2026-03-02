@@ -15,7 +15,8 @@ def home_page(request):
     return render(request,"Home.html",{'Categories':Categories,'AllProducts':AllProducts,'NewProducts':NewProducts})
 
 def about_page(request):
-    return render(request,"About.html")
+    Categories = CategoryDb.objects.all()
+    return render(request,"About.html",{'Categories':Categories})
 def all_products(request , cat_name=None):
     Categories = CategoryDb.objects.all()
     Products = ProductDb.objects.all()
@@ -34,7 +35,8 @@ def single_page(request,product_id):
     return render(request,"Single_Page.html",{'Categories':Categories,'F_Products':F_Products,'SingleProduct':SingleProduct})
 
 def contact(request):
-    return  render(request,"Contact.html")
+    Categories = CategoryDb.objects.all()
+    return  render(request,"Contact.html",{'Categories':Categories})
 
 def save_contact(request):
     if request.method == "POST":
@@ -78,8 +80,9 @@ def save_sign_up(request):
         return redirect('sign_up')
 
 def services(request):
+    Categories = CategoryDb.objects.all()
     service = ServiceDb.objects.all()
-    return render(request,"Services.html",{'service':service})
+    return render(request,"Services.html",{'service':service,'Categories':Categories})
 
 def user_login(request):
     if request.method == "POST":
@@ -102,6 +105,7 @@ def log_out(request):
 def payment(request):
     return render(request,"Payment.html")
 def cart(request):
+    Categories = CategoryDb.objects.all()
     data = CartDb.objects.filter(Cart_Username=request.session['Username'])
     sub_total = 0
     delivery = 0
@@ -116,7 +120,7 @@ def cart(request):
             delivery = 100
         grand_total = sub_total + delivery
     return render(request, "Cart.html", {'data': data,
-    'sub_total': sub_total,'delivery': delivery, 'grand_total': grand_total})
+    'sub_total': sub_total,'delivery': delivery, 'grand_total': grand_total,'Categories':Categories})
 
 def add_cart(request):
     if request.method == "POST":
@@ -136,6 +140,7 @@ def add_cart(request):
 
 def checkout(request):
     data = CartDb.objects.filter(Cart_Username=request.session['Username'])
+    Categories = CategoryDb.objects.all()
     sub_total = 0
     delivery = 0
     grand_total = 0
@@ -149,7 +154,7 @@ def checkout(request):
             delivery = 100
         grand_total = sub_total + delivery
     return render(request, "Checkout.html",
-                  {'data': data, 'sub_total': sub_total, 'delivery': delivery, 'grand_total': grand_total}, )
+                  {'data': data, 'sub_total': sub_total, 'delivery': delivery, 'grand_total': grand_total,'Categories':Categories}, )
 
 def add_checkout(request):
     if request.method == "POST":
