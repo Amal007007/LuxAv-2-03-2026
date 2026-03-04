@@ -90,6 +90,7 @@ def save_product(request):
         product_image = request.FILES['product_image']
         obj = ProductDb(Category_Name=product_c_name,Product_Name=product_name,Product_Price=product_price,Product_Description=product_description,Product_Image=product_image)
         obj.save()
+        messages.success(request, "Product added successfully!")
         return redirect('add_products')
 
 def edit_product(request, p_id):
@@ -110,11 +111,13 @@ def update_product(request,pro_id):
         except MultiValueDictKeyError:
             file = ProductDb.objects.get(id=pro_id).Product_Image
         ProductDb.objects.filter(id=pro_id).update(Category_Name=product_c_name,Product_Name=product_name,Product_Price=product_price,Product_Description=product_description,Product_Image=file)
+        messages.success(request, "Product updated successfully!")
         return redirect('view_products')
 
 def delete_product(request,product_id):
     product_data = ProductDb.objects.filter(id=product_id)
     product_data.delete()
+    messages.success(request, "Product deleted successfully!")
     return redirect('view_products')
 
 def save_service(request):
@@ -124,6 +127,7 @@ def save_service(request):
         service_image = request.FILES['service_image']
         obj = ServiceDb(ServiceName=service_name, ServiceDescription=service_description, ServiceImage=service_image)
         obj.save()
+        messages.success(request, "Service added successfully!")
         return redirect('add_services')
 
 
